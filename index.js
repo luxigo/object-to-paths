@@ -3,36 +3,53 @@ module.exports={
   dump: dump
 }
   
-function objectToPaths(data) {
-    var validId = /^[a-z_$][a-z0-9_$]*$/i;
-    var result = [];
-    var seen = [];
-    doIt(data, "");
-    return result;
+function objectToPaths(data, options) {
+  var options=options||{};
+  var validId = /^[a-z_$][a-z0-9_$]*$/i;
+  var result = [];
+  var seen = [];
+  var seen_path = [];
+  doIt(data, "");
+  return result;
 
   function doIt(data, s) {
-    if (data && typeof data === "object") {
-      if (seen.indexOf(data)>=0) {
-        result.push(s + ': [circular]');
-
-      } else {
-        seen.push(data);
-        if (Array.isArray(data)) {
-          for (var i = 0; i < data.length; i++) {
-            doIt(data[i], s + "[" + i + "]");
-          }
+    if (data) {
+      switch(typeof data) {
+      case 'object':
+        var index=seen.indexOf(data);
+        if (index>=0) {
+          result.push(s + ': [circular: '+seen_path[index]+']');
 
         } else {
-          for (var p in data) {
-            if (data.hasOwnProperty(p)) {
-              if (validId.test(p)) {
-                doIt(data[p], s + ((s.length) ? "."+p : p));
-              } else {
-                doIt(data[p], s + "[\"" + p + "\"]");
+          seen.push(data);
+          seen_path.push(s);
+          if (Array.isArray(data)) {
+            for (var i = 0; i < data.length; i++) {
+              doIt(data[i], s + "[" + i + "]");
+            }
+
+          } else {
+            for (var p in data) {
+              if (!data.hasOwnProperty || data.hasOwnProperty(p)) {
+                if (validId.test(p)) {
+                  doIt(data[p], s + ((s.length) ? "."+p : p));
+                } else {
+                  doIt(data[p], s + "[\"" + p + "\"]");
+                }
               }
             }
           }
         }
+        break;
+
+      case 'function':
+        result.push(s + ': ' + ((options.functions)?data:'[function]'));
+        break;
+
+      default:
+        result.push(s + ': ' + data);
+        break;
+
       }
 
     } else {
