@@ -24,10 +24,12 @@ function objectToPaths(data) {
 
         } else {
           for (var p in data) {
-            if (validId.test(p)) {
-              doIt(data[p], s + ((s.length) ? "."+p : p));
-            } else {
-              doIt(data[p], s + "[\"" + p + "\"]");
+            if (data.hasOwnProperty(p)) {
+              if (validId.test(p)) {
+                doIt(data[p], s + ((s.length) ? "."+p : p));
+              } else {
+                doIt(data[p], s + "[\"" + p + "\"]");
+              }
             }
           }
         }

@@ -1,6 +1,6 @@
 {
   "name": "object-to-paths",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Allow meaningful dumps of huge objects, or whatever you want",
   "main": "index.js",
   "scripts": {
