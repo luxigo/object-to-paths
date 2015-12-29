@@ -1,0 +1,25 @@
+{
+  "name": "object-to-paths",
+  "version": "1.0.1",
+  "description": "Allow meaningful dumps of huge objects, or whatever you want",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js | less"
+  },
+  "keywords": [
+    "object",
+    "dump",
+    "full path"
+  ],
+  "author": "http://stackoverflow.com/users/4609737/lutz",
+  "contributor": "luc.deschenaux@freesurf.ch",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luxigo/object-to-paths.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luxigo/object-to-paths/issues"
+  },
+  "homepage": "https://github.com/luxigo/object-to-paths#readme"
+}
